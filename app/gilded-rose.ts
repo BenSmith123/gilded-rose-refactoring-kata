@@ -21,10 +21,14 @@ const isConjuredItem = (item: Item): boolean => {
 }
 
 const isLegendaryItem = (item: Item): boolean => {
+  // extract an Enum of 'legendary items' once more are required
   return item.name === ItemName.SulfurasHandOfRagnaros;
 }
 
 const shouldItemValueIncrease = (item: Item): boolean => {
+  // TODO - requirements unclear on what a backstage pass is,
+  // should the logic look for any item considered a backstage pass
+  // OR specifically only look at the current concert pass item
   return item.name === ItemName.AgedBrie || item.name == ItemName.BackStagePassesToConcert
 }
 
@@ -50,6 +54,10 @@ export class GildedRose {
     this.items = items;
   }
 
+  // TODO - further refactoring could be done here:
+  // - remove if/else (use function calls / returns)
+  // - re-order logic for fast return
+  // - install a code formatting tool!
   updateQuality() {
     
     for (let i = 0; i < this.items.length; i++) {
@@ -63,6 +71,7 @@ export class GildedRose {
           decreaseItemQuality(item);
         }
       } else {
+        // TODO - function called multiple times
         increaseItemQuality(item)
         if (item.name == ItemName.BackStagePassesToConcert) {
           if (item.sellIn < 11) {

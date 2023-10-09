@@ -6,6 +6,8 @@ const testItemName = "item name"
 describe('Gilded Rose', () => {
   
   it('should create a new item with default values', () => {
+
+    // TODO - lots of code duplication, this could be extracted to a function & used by all tests
     const gildedRose = new GildedRose([new Item(testItemName, 0, 0)]);
 
     const item = gildedRose.items[0];
