@@ -12,6 +12,10 @@ export class Item {
   }
 }
 
+const isConjuredItem = (item: Item) => {
+  return item.name.toLowerCase().includes('conjured')
+}
+
 export class GildedRose {
   items: Array<Item>;
 
@@ -24,7 +28,11 @@ export class GildedRose {
       if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
         if (this.items[i].quality > 0) {
           if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            this.items[i].quality = this.items[i].quality - 1
+            if (isConjuredItem(this.items[i])) {
+              this.items[i].quality = this.items[i].quality - 2
+            } else {
+              this.items[i].quality = this.items[i].quality - 1
+            }
           }
         }
       } else {

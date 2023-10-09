@@ -76,14 +76,14 @@ describe('Gilded Rose', () => {
     expect(item.quality).toBe(33);
   });
 
-  it('should descrease backstage passes value to 0 when concert has finished', () => {
+  it('should decrease backstage passes value to 0 when concert has finished', () => {
     const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 0, 30)]);
     const items = gildedRose.updateQuality();
     const item = items[0];
     expect(item.quality).toBe(0);
   });
 
-  it.skip('should descrease conjured items twice as fast', () => {
+  it.skip('should decrease conjured items twice as fast', () => {
     const gildedRose = new GildedRose([new Item('Conjured Mana Cake', 4, 20)]);
     const items = gildedRose.updateQuality();
     const item = items[0];
