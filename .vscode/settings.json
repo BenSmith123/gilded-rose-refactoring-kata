@@ -1,0 +1,11 @@
+{
+    "typescript.tsdk": "node_modules\\typescript\\lib",
+    // format on save
+    // "editor.formatOnSave": true,
+    // "[javascript]": {
+    //   "editor.formatOnSave": true
+    // },
+    // disable jest test run on every save
+    "jest.autoRun": {},
+    "jestrunner.runOptions": ["--no-coverage"]
+  }
