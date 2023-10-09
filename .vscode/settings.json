@@ -7,5 +7,5 @@
     // },
     // disable jest test run on every save
     "jest.autoRun": {},
-    "jestrunner.runOptions": ["--no-coverage"]
+    // "jestrunner.runOptions": ["--no-coverage"]
   }
