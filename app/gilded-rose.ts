@@ -19,7 +19,7 @@ const isConjuredItem = (item: Item) => {
 }
 
 const shouldItemValueIncrease = (item: Item) => {
-  return item.name === ItemName.AgedBrie || item.name === ItemName.BackStagePassesToConcert
+  return item.name === ItemName.AgedBrie || item.name == ItemName.BackStagePassesToConcert
 }
 
 export class GildedRose {
@@ -31,7 +31,7 @@ export class GildedRose {
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name != ItemName.AgedBrie && this.items[i].name != ItemName.BackStagePassesToConcert) {
+      if (!shouldItemValueIncrease(this.items[i])) {
         if (this.items[i].quality > 0) {
           if (this.items[i].name != ItemName.SulfurasHandOfRagnaros) {
             if (isConjuredItem(this.items[i])) {
