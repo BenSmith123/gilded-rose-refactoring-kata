@@ -14,12 +14,33 @@ export class Item {
   }
 }
 
-const isConjuredItem = (item: Item) => {
-  return item.name.toLowerCase().includes('conjured')
+type NullibleItem = Item | undefined
+
+const isConjuredItem = (item: Item): boolean => {
+  return item.name.toLowerCase().includes('conjured');
 }
 
-const shouldItemValueIncrease = (item: Item) => {
+const isLegendaryItem = (item: Item): boolean => {
+  return item.name === ItemName.SulfurasHandOfRagnaros;
+}
+
+const shouldItemValueIncrease = (item: Item): boolean => {
   return item.name === ItemName.AgedBrie || item.name == ItemName.BackStagePassesToConcert
+}
+
+const increaseItemQuality = (item: Item): NullibleItem => {
+  if (item.quality >= 50) return;
+
+  item.quality++;
+  return item;
+}
+
+// TODO - fix param (negative or positive number?)
+const decreaseItemQuality = (item: Item, decreaseAmount = 1): NullibleItem => {
+  if (item.quality <= 0 || isLegendaryItem(item)) return;
+
+  item.quality -= decreaseAmount;
+  return item;
 }
 
 export class GildedRose {
@@ -36,51 +57,36 @@ export class GildedRose {
       const item = this.items[i]
 
       if (!shouldItemValueIncrease(item)) {
-        if (item.quality > 0) {
-          if (item.name != ItemName.SulfurasHandOfRagnaros) {
-            if (isConjuredItem(item)) {
-              item.quality = item.quality - 2
-            } else {
-              item.quality = item.quality - 1
-            }
-          }
+        if (isConjuredItem(item)) {
+          decreaseItemQuality(item, 2); // fix param (see function)
+        } else {
+          decreaseItemQuality(item);
         }
       } else {
-        if (item.quality < 50) {
-          item.quality = item.quality + 1
-          if (item.name == ItemName.BackStagePassesToConcert) {
-            if (item.sellIn < 11) {
-              if (item.quality < 50) {
-                item.quality = item.quality + 1
-              }
-            }
-            if (item.sellIn < 6) {
-              if (item.quality < 50) {
-                item.quality = item.quality + 1
-              }
-            }
+        increaseItemQuality(item)
+        if (item.name == ItemName.BackStagePassesToConcert) {
+          if (item.sellIn < 11) {
+            increaseItemQuality(item)
+          }
+          if (item.sellIn < 6) {
+            increaseItemQuality(item)
           }
         }
       }
-      if (item.name != ItemName.SulfurasHandOfRagnaros) {
+      if (!isLegendaryItem(item)) {
         item.sellIn = item.sellIn - 1;
       }
       if (item.sellIn < 0) {
         if (item.name != ItemName.AgedBrie) {
           if (item.name != ItemName.BackStagePassesToConcert) {
-            if (item.quality > 0) {
-              if (item.name != ItemName.SulfurasHandOfRagnaros) {
-                item.quality = item.quality - 1
-              }
-            }
+            decreaseItemQuality(item);
           } else {
             item.quality = item.quality - item.quality
           }
-        } else {
-          if (item.quality < 50) {
-            item.quality = item.quality + 1
-          }
-        }
+          continue;
+        } 
+
+        increaseItemQuality(item)
       }
     }
 
