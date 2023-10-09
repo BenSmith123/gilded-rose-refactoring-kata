@@ -2,6 +2,7 @@ import { Item, GildedRose } from '@/gilded-rose';
 
 const testItemName = "item name"
 
+// TODO - set up tests to run on commit
 describe('Gilded Rose', () => {
   
   it('should create a new item with default values', () => {
